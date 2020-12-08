@@ -2,8 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>7 Tage Inzidenz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Zeigt die COVID-19 7-Tage Inzidenz für den Landkreis Dachau">
+	<meta name="theme-color" content="#EA2832">
+  <link rel="shortcut icon" href="icon-32.png">
+  <meta property="og:image" content="icon-512.png">
+  <link rel="manifest" href="7ti.webmanifest">
+
   <style>
     body {
       text-align: center;
@@ -23,15 +29,28 @@
   <div class="center">
     <h1>7 Tage Inzidenz</h1>
     <h3>Dachau</h3>
-    <h2 id="cases7"></h2>
+    <h2 id="cases">...</h2>
   </div>
   <script>
     init()
     async function init () {
-      const cases7 = await fetch('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=GEN+%3D+%27Dachau%27&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=cases7_per_100k&returnGeometry=false&returnCentroid=false&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=false&quantizationParameters=&sqlFormat=none&f=pjson&token=')
+      const el = document.getElementById('cases')
+      const spinner = createSpinner(el)
+      const cases = await fetch('https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=GEN+%3D+%27Dachau%27&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=cases7_per_100k&returnGeometry=false&returnCentroid=false&featureEncoding=esriDefault&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnQueryGeometry=false&returnDistinctValues=false&cacheHint=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=false&quantizationParameters=&sqlFormat=none&f=pjson&token=')
         .then(res => res.json())
         .then(res => res.features[0].attributes.cases7_per_100k.toFixed(1))
-      document.getElementById('cases7').innerHTML = cases7
+      spinner.stop()
+      el.innerHTML = cases
+    }
+
+    function createSpinner (element) {
+      const sequence = '◐◓◑◒'
+      let i = 0
+      const interval = setInterval(() => {
+        element.innerHTML = sequence[i++]
+        i = i % sequence.length
+      }, 200)
+      return { stop: () => clearInterval(interval) }
     }
   </script>
 </body>
