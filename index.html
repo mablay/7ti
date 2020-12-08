@@ -52,6 +52,12 @@
       }, 200)
       return { stop: () => clearInterval(interval) }
     }
+
+    window.addEventListener("load", () => {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("service-worker.js");
+      }
+    });
   </script>
 </body>
 </html>
