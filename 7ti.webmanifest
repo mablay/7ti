@@ -20,7 +20,7 @@
       }
   ],
   "start_url": "/7ti/index.html",
-  "display": "fullscreen",
+  "display": "standalone",
   "theme_color": "#EA2832",
   "background_color": "#EA2832"
 }
