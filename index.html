@@ -1,17 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <title>7 Tage Inzidenz</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Zeigt die COVID-19 7-Tage Inzidenz für den Landkreis Dachau">
 	<meta name="theme-color" content="#EA2832">
   <link rel="shortcut icon" href="icon-32.png">
+
+  <meta property="og:title" content="7 Tage Inzidenz" />
+  <meta property="og:type" content="website" />
   <meta property="og:image" content="icon-512.png">
+  <meta property="og:url" content="https://github.com/mablay/7ti" />
+
   <link rel="manifest" href="7ti.webmanifest">
 
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
     body {
+      overflow: hidden;
       text-align: center;
       background-color: #333;
       color: white;
@@ -22,7 +35,7 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -60%);
     }
 
     #cases {
@@ -32,7 +45,23 @@
     }
 
     #region {
-      color: #AAA
+      color: #AAA;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      margin: auto;
+      text-align: center;
+      width: 100%;
+      padding-bottom: 12px;
+      color: #666;
+      font-weight: lighter;
+    }
+
+    .footer a {
+      color: #666;
+      font-weight: lighter;
     }
   </style>
 </head>
@@ -41,6 +70,11 @@
     <h3>7 Tage Inzidenz</h3>
     <p id="cases">...</p>
     <p id="region">Landkreis Dachau</p>
+  </div>
+  <div class="footer">
+    Quelle: <a href="https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4">
+    RKI COVID-19
+    </a>
   </div>
   <script>
     init()
